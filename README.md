@@ -23,7 +23,6 @@ The app fetches weather, forecast, and air quality data from Open-Meteo services
 ```text
 clima/
 ├─ frontend/      # React + Vite application
-├─ backend/       # Rust API (Actix Web)
 └─ backend-java/  # Java API (Spring Boot)
 ```
 
@@ -31,7 +30,6 @@ clima/
 
 - **Node.js** 18+
 - **npm** 9+
-- For Rust backend: **Rust toolchain** (cargo)
 - For Java backend: **Java 17** + **Maven**
 
 ## Quick start
@@ -109,14 +107,6 @@ npm run dev
 npm run build
 npm run lint
 npm run preview
-```
-
-### Rust backend
-
-```powershell
-cd backend
-cargo run
-cargo test
 ```
 
 ### Java backend
