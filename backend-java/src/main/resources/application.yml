@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: clima_api
+
+open-meteo:
+  geocoding-url: ${OPEN_METEO_GEOCODING_URL:https://geocoding-api.open-meteo.com/v1/search}
+  forecast-url: ${OPEN_METEO_FORECAST_URL:https://api.open-meteo.com/v1/forecast}
+  air-quality-url: ${OPEN_METEO_AIR_QUALITY_URL:https://air-quality-api.open-meteo.com/v1/air-quality}
+
+app:
+  http:
+    connect-timeout-ms: ${HTTP_CONNECT_TIMEOUT_MS:3000}
+    read-timeout-ms: ${HTTP_READ_TIMEOUT_MS:6000}
+  rate-limit:
+    enabled: ${RATE_LIMIT_ENABLED:true}
+    requests-per-minute: ${RATE_LIMIT_REQUESTS_PER_MINUTE:120}
