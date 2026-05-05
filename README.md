@@ -1,4 +1,4 @@
-# Weather App (Clima)
+# Weather App
 
 A full-stack weather dashboard with a **React + TypeScript frontend** and two backend options:
 
