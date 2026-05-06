@@ -38,15 +38,7 @@ clima/
 
 ### 1. Start a backend
 
-#### Option A: Rust backend
-
-```powershell
-cd backend
-Copy-Item .env.example .env
-cargo run
-```
-
-#### Option B: Java backend
+#### Java backend
 
 ```powershell
 cd backend-java
