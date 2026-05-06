@@ -2,10 +2,11 @@ import type { AirQuality } from '../models/weather'
 import { compactFormatter } from './formatters'
 
 export type AqiSummary = {
-  label: string
-  value: string
-  bar: string
   detail: string
+  indicatorClassName: string
+  label: string
+  progress: number
+  value: string
 }
 
 export function aqiSummary(airQuality: AirQuality | null): AqiSummary {
@@ -13,44 +14,49 @@ export function aqiSummary(airQuality: AirQuality | null): AqiSummary {
 
   if (value === null) {
     return {
-      label: 'Indisponível',
-      value: '--',
-      bar: 'w-0 bg-zinc-300',
       detail: 'Sem leitura recente',
+      indicatorClassName: 'bg-[var(--muted-foreground)]',
+      label: 'Indisponível',
+      progress: 0,
+      value: '--',
     }
   }
 
   if (value <= 50) {
     return {
-      label: 'Boa',
-      value: compactFormatter.format(value),
-      bar: 'w-1/4 bg-emerald-500',
       detail: 'Ar confortável',
+      indicatorClassName: 'bg-emerald-600',
+      label: 'Boa',
+      progress: 25,
+      value: compactFormatter.format(value),
     }
   }
 
   if (value <= 100) {
     return {
-      label: 'Moderada',
-      value: compactFormatter.format(value),
-      bar: 'w-1/2 bg-amber-500',
       detail: 'Atenção leve',
+      indicatorClassName: 'bg-amber-600',
+      label: 'Moderada',
+      progress: 50,
+      value: compactFormatter.format(value),
     }
   }
 
   if (value <= 150) {
     return {
-      label: 'Sensível',
-      value: compactFormatter.format(value),
-      bar: 'w-3/4 bg-orange-500',
       detail: 'Reduza exposição prolongada',
+      indicatorClassName: 'bg-orange-600',
+      label: 'Sensível',
+      progress: 75,
+      value: compactFormatter.format(value),
     }
   }
 
   return {
-    label: 'Ruim',
-    value: compactFormatter.format(value),
-    bar: 'w-full bg-rose-500',
     detail: 'Evite esforço ao ar livre',
+    indicatorClassName: 'bg-rose-600',
+    label: 'Ruim',
+    progress: 100,
+    value: compactFormatter.format(value),
   }
 }

@@ -15,9 +15,9 @@ function App() {
   const theme = useTheme()
 
   return (
-    <main className="weather-scene min-h-screen text-[var(--text)]" data-theme={theme.activeTheme}>
-      <div className="relative z-10 mx-auto min-h-screen max-w-[1680px] px-4 py-5 pb-24 sm:px-6 lg:px-8 2xl:px-10">
-        <section className="rounded-[28px] border border-[var(--shell-border)] bg-[var(--shell-bg)] p-4 shadow-2xl shadow-black/35 backdrop-blur-xl sm:p-5 lg:p-6">
+    <main className="weather-scene text-[var(--foreground)]" data-theme={theme.activeTheme}>
+      <div className="mx-auto min-h-screen max-w-[1280px] px-4 py-4 pb-24 sm:px-6 lg:px-8">
+        <div className="flex flex-col gap-4">
           <WeatherSearchForm
             city={dashboard.city}
             isLoading={dashboard.isLoading}
@@ -29,20 +29,20 @@ function App() {
 
           <ErrorBanner message={dashboard.error} />
 
-          <div className="grid gap-5 xl:grid-cols-[minmax(340px,0.64fr)_minmax(0,1.36fr)] 2xl:grid-cols-[minmax(420px,0.62fr)_minmax(0,1.38fr)]">
+          <div className="grid gap-4 xl:grid-cols-[minmax(320px,0.86fr)_minmax(0,1.34fr)]">
             <CurrentWeatherPanel weather={dashboard.weather} />
 
-            <aside className="grid gap-4">
+            <div className="grid content-start gap-4">
               <div className="grid gap-4 md:grid-cols-2">
                 <AirQualityCard airQuality={dashboard.weather?.air_quality ?? null} summary={dashboard.aqi} />
                 <WindCard weather={dashboard.weather} />
               </div>
               <HourlyRainSection className="" hours={dashboard.hourly} />
-            </aside>
+            </div>
           </div>
 
-          <DailyForecastSection days={dashboard.daily} />
-        </section>
+          <DailyForecastSection className="" days={dashboard.daily} />
+        </div>
       </div>
 
       <ThemeToggleButton
