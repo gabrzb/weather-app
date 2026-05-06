@@ -10,6 +10,8 @@ import { locationLabel } from '../utils/location'
 import { weatherDescription } from '../utils/weatherDescription'
 import { Metric } from './Metric'
 import { SvgRepoIcon } from './SvgRepoIcon'
+import { Badge } from './ui/badge'
+import { Card, CardContent, CardDescription, CardHeader } from './ui/card'
 
 type CurrentWeatherPanelProps = {
   weather: WeatherData | null
@@ -22,43 +24,44 @@ export function CurrentWeatherPanel({ weather }: CurrentWeatherPanelProps) {
   const place = weather ? locationLabel(weather.location) || weather.timezone : 'Carregando local'
 
   return (
-    <section className="overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--card-bg)] shadow-2xl shadow-black/25 backdrop-blur-xl">
-      <div className={`border-b ${mood.surface} p-4 sm:p-5`}>
-        <div className="flex min-h-[20rem] flex-col justify-between gap-6">
-          <div className="min-w-0">
-            <div className="mb-4 inline-flex max-w-full items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--control-bg)] px-3 py-2 text-sm font-medium text-[var(--text)]">
-              <SvgRepoIcon className="h-5 w-5" name="location" />
-              {weather ? weather.location.name : DEFAULT_CITY}
-            </div>
+    <Card className="overflow-hidden">
+      <CardHeader className="border-b border-[var(--border)] bg-[var(--weather-soft)]">
+        <div className="flex min-h-[17rem] flex-col justify-between gap-6">
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <Badge className="max-w-full truncate" variant="outline">
+                <SvgRepoIcon className="h-4 w-4 shrink-0" name="location" />
+                {weather ? weather.location.name : DEFAULT_CITY}
+              </Badge>
 
-            <p className="text-sm font-medium text-[var(--muted)]">{place}</p>
-            <div className="mt-4 flex flex-wrap items-end gap-x-4 gap-y-3">
-              <p className="text-6xl font-light leading-none tracking-normal text-[var(--text)] sm:text-7xl">
-                {weather ? formatTemp(weather.current.temperature_2m) : '--\u00b0C'}
-              </p>
-              <div className="pb-3">
-                <p className="text-2xl font-semibold text-[var(--text)]">{mood.label}</p>
-                <p className="mt-1 text-sm text-[var(--muted)]">
-                  {weather ? `Atualizado ${formatCurrentTime(weather.current.time)}` : 'Aguardando API'}
+              <p className="mt-4 text-sm font-medium text-[var(--muted-foreground)]">{place}</p>
+              <div className="mt-4 flex flex-wrap items-end gap-x-4 gap-y-3">
+                <p className="text-5xl font-semibold leading-none tracking-normal text-[var(--foreground)] sm:text-6xl">
+                  {weather ? formatTemp(weather.current.temperature_2m) : '--\u00b0C'}
                 </p>
+                <div className="pb-1">
+                  <p className="text-lg font-semibold text-[var(--foreground)]">{mood.label}</p>
+                  <p className="mt-1 text-sm text-[var(--muted-foreground)]">
+                    {weather ? `Atualizado ${formatCurrentTime(weather.current.time)}` : 'Aguardando API'}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="flex items-end justify-between gap-4">
-            <p className="max-w-sm text-sm leading-6 text-[var(--subtle)]">
-              {weather
-                ? `Sensação de ${formatTemp(weather.current.apparent_temperature)} com ${formatPercent(weather.current.relative_humidity_2m)} de umidade.`
-                : 'Os dados principais aparecem assim que a API responder.'}
-            </p>
-            <div className="grid h-20 w-20 shrink-0 place-items-center rounded-lg border border-[var(--border)] bg-[var(--icon-bg)] shadow-lg shadow-black/20">
-              <SvgRepoIcon className="h-14 w-14" name={mood.icon} />
+            <div className="grid h-16 w-16 shrink-0 place-items-center rounded-md border border-[var(--border)] bg-[var(--weather-icon)] sm:h-20 sm:w-20">
+              <SvgRepoIcon className="h-11 w-11 sm:h-14 sm:w-14" name={mood.icon} />
             </div>
           </div>
-        </div>
-      </div>
 
-      <div className="grid gap-x-4 px-4 sm:grid-cols-2 sm:px-5 xl:grid-cols-2 2xl:grid-cols-3">
+          <CardDescription className="max-w-md">
+            {weather
+              ? `Sensação de ${formatTemp(weather.current.apparent_temperature)} com ${formatPercent(weather.current.relative_humidity_2m)} de umidade.`
+              : 'Os dados principais aparecem assim que a API responder.'}
+          </CardDescription>
+        </div>
+      </CardHeader>
+
+      <CardContent className="grid gap-x-4 p-0 sm:grid-cols-2 xl:grid-cols-2">
         <Metric
           icon="thermometer"
           label="Sensação"
@@ -89,7 +92,7 @@ export function CurrentWeatherPanel({ weather }: CurrentWeatherPanelProps) {
           label="Chuva agora"
           value={weather ? formatMeasure(weather.current.rain + weather.current.showers, 'mm') : '--'}
         />
-      </div>
-    </section>
+      </CardContent>
+    </Card>
   )
 }
