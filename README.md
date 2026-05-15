@@ -1,8 +1,6 @@
 # Weather App
 
-A full-stack weather dashboard with a **React + TypeScript frontend** and two backend options:
-
-- **Rust (Actix Web)** in `backend`
+A full-stack weather dashboard with a **React + TypeScript frontend** and Java Back-End:
 - **Java (Spring Boot)** in `backend-java`
 
 The app fetches weather, forecast, and air quality data from Open-Meteo services.
