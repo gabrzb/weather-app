@@ -1,7 +1,9 @@
 # Weather App
 
-A full-stack weather dashboard with a **React + TypeScript frontend** and Java Back-End:
+A full-stack weather dashboard with a **React + TypeScript frontend** and Rust/Java/Go Back-End:
+- **Rust (Actix Web)** in `backend`
 - **Java (Spring Boot)** in `backend-java`
+- **Go (Gin)** in `backend-golang`
 
 The app fetches weather, forecast, and air quality data from Open-Meteo services.
 
@@ -20,21 +22,33 @@ The app fetches weather, forecast, and air quality data from Open-Meteo services
 
 ```text
 clima/
-├─ frontend/      # React + Vite application
-└─ backend-java/  # Java API (Spring Boot)
+|-- frontend/        # React + Vite application
+|-- backend/         # Rust API (Actix Web)
+|-- backend-java/    # Java API (Spring Boot)
+`-- backend-golang/  # Go API (Gin)
 ```
 
 ## Prerequisites
 
 - **Node.js** 18+
 - **npm** 9+
+- For Rust backend: **Rust** 1.85+ + **Cargo**
 - For Java backend: **Java 17** + **Maven**
+- For Go backend: **Go** 1.24+
 
 ## Quick start
 
-> Start **only one backend** at a time (both default to `127.0.0.1:8081`).
+> Start **only one backend** at a time (all backends default to `127.0.0.1:8081`).
 
 ### 1. Start a backend
+
+#### Rust backend
+
+```powershell
+cd backend
+Copy-Item .env.example .env
+cargo run
+```
 
 #### Java backend
 
@@ -42,6 +56,14 @@ clima/
 cd backend-java
 Copy-Item .env.example .env
 mvn spring-boot:run
+```
+
+#### Go backend
+
+```powershell
+cd backend-golang
+Copy-Item .env.example .env
+go run ./cmd/clima-api
 ```
 
 ### 2. Start the frontend
@@ -65,7 +87,7 @@ Open `http://localhost:5173`.
 | --- | --- | --- |
 | `VITE_API_BASE_URL` | `http://127.0.0.1:8081` | Base URL used by the frontend for API requests |
 
-### Backends (`backend/.env` or `backend-java/.env`)
+### Backends (`backend/.env`, `backend-java/.env`, or `backend-golang/.env`)
 
 | Variable | Default | Description |
 | --- | --- | --- |
@@ -73,10 +95,10 @@ Open `http://localhost:5173`.
 | `OPEN_METEO_GEOCODING_URL` | `https://geocoding-api.open-meteo.com/v1/search` | Geocoding endpoint |
 | `OPEN_METEO_FORECAST_URL` | `https://api.open-meteo.com/v1/forecast` | Forecast endpoint |
 | `OPEN_METEO_AIR_QUALITY_URL` | `https://air-quality-api.open-meteo.com/v1/air-quality` | Air quality endpoint |
-| `RATE_LIMIT_ENABLED` | `true` (Java backend) | Enables request rate limiting |
-| `RATE_LIMIT_REQUESTS_PER_MINUTE` | `120` (Java backend) | Max requests per minute per client |
-| `HTTP_CONNECT_TIMEOUT_MS` | `3000` (Java backend) | HTTP connect timeout |
-| `HTTP_READ_TIMEOUT_MS` | `6000` (Java backend) | HTTP read timeout |
+| `RATE_LIMIT_ENABLED` | `true` (Java/Go backend) | Enables request rate limiting |
+| `RATE_LIMIT_REQUESTS_PER_MINUTE` | `120` (Java/Go backend) | Max requests per minute per client |
+| `HTTP_CONNECT_TIMEOUT_MS` | `3000` (Java/Go backend) | HTTP connect timeout |
+| `HTTP_READ_TIMEOUT_MS` | `6000` (Java/Go backend) | HTTP read timeout |
 
 ## API endpoints
 
@@ -105,4 +127,20 @@ npm run preview
 cd backend-java
 mvn spring-boot:run
 mvn test
+```
+
+### Rust backend
+
+```powershell
+cd backend
+cargo run
+cargo test
+```
+
+### Go backend
+
+```powershell
+cd backend-golang
+go run ./cmd/clima-api
+go test ./...
 ```
